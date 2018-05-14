@@ -10,18 +10,29 @@ A core parsing feature of the [Jikan API](https://github.com/jikan-me) as a sepa
 
 
 ## Usage
-```
+```php
+<?php
 require 'vendor/autoload.php';
 
 class Parser extends \Skraypar\Skraypar {
 
 	public function loadRules() {
 		$this->addRule(
-			'~<meta property="og:url" content="(.*?)">~',
-			function() {
+			'~<meta property="og:url" content="(.*?)">~', // Pattern to match
+			function() { // Function to execute when matched
+
+				/*
+				* $this->matches // output of pattern match
+				* $this->line // current line
+				* $this->lineNo // current line no.
+				* $this->file // All lines in an array
+				*/
+				
 				var_dump($this->matches);
 			}
 		);
+
+		// Add more Rules here
 	}
 }
 
