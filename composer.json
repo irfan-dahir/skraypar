@@ -1,0 +1,22 @@
+{
+    "name": "irfan-dahir/skraypar",
+    "description": "Scraper with pattern parsing",
+    "type": "library",
+    "license": "GPL-3.0",
+    "authors": [
+        {
+            "name": "irfan-dahir",
+            "email": "irfan.dahir@gmail.com"
+        }
+    ],
+    "autoload": {
+        "psr-4": {
+            "Skraypar\\": [
+                "src"
+            ]
+        }
+    },
+    "require": {
+        "guzzlehttp/guzzle": "^6.3"
+    }
+}
