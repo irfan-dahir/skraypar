@@ -1,5 +1,5 @@
 # Skraypar - Pattern Parser
-A core parsing feature of the [Jikan API](https://github.com/jikan-me) as a seperate abstraction class.
+A core parsing feature of the [Jikan API](https://github.com/jikan-me) as a separate abstraction class.
 
 **Work in Progress**
 
