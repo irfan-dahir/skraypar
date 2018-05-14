@@ -16,7 +16,7 @@ require 'vendor/autoload.php';
 
 class Parser extends \Skraypar\Skraypar {
 
-	public function loadRules() {
+	public function loadRules() { // Abstract function
 		$this->addRule(
 			'~<meta property="og:url" content="(.*?)">~', // Pattern to match
 			function() { // Function to execute when matched
@@ -27,7 +27,7 @@ class Parser extends \Skraypar\Skraypar {
 				* $this->lineNo // current line no.
 				* $this->file // All lines in an array
 				*/
-				
+
 				var_dump($this->matches);
 			}
 		);
