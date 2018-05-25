@@ -86,8 +86,8 @@ abstract class Skraypar {
 		}
 	}
 
-	public function addRule($pattern, $callback) {
-		$this->rules[$pattern] = new \Skraypar\Rule($pattern, $callback);
+	public function addRule($hash, $pattern, $callback) {
+		$this->rules[$pattern] = new \Skraypar\Rule($hash, $pattern, $callback);
 	}
 
 	private function isAccepting() {
