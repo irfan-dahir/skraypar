@@ -9,8 +9,7 @@ class Rule {
 	public $callback;
 	public $found;
 
-	public function __construct(string $hash, string $pattern, callable $callback) {
-		$this->hash = $hash;
+	public function __construct(string $pattern, callable $callback) {
 		$this->pattern = $pattern;
 		$this->callback = $callback;
 		$this->found = false;

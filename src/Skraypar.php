@@ -75,10 +75,10 @@ abstract class Skraypar {
 			$this->line = $line;
 
 
-			foreach ($this->rules as $pattern => &$rule) {
+			foreach ($this->rules as $hash => &$rule) {
 				if ($rule->found) { continue; }
 
-				if (preg_match($pattern, $this->line, $this->matches)) {
+				if (preg_match($rule->pattern, $this->line, $this->matches)) {
 					($rule->callback)();
 					$rule->found = true;
 				}
@@ -87,7 +87,7 @@ abstract class Skraypar {
 	}
 
 	public function addRule($hash, $pattern, $callback) {
-		$this->rules[$pattern] = new \Skraypar\Rule($hash, $pattern, $callback);
+		$this->rules[$hash] = new \Skraypar\Rule($pattern, $callback);
 	}
 
 	private function isAccepting() {
