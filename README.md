@@ -8,7 +8,6 @@ A core parsing feature of the [Jikan API](https://github.com/jikan-me) as a sepa
 1. This library uses [Composer](https://getcomposer.org), install that first.
 2. `composer require irfan-dahir/skraypar`
 
-
 ## Usage
 ```php
 <?php
@@ -18,6 +17,7 @@ class Parser extends \Skraypar\Skraypar {
 
 	public function loadRules() { // Abstract function
 		$this->addRule(
+			'anime_url', // used as a hash key
 			'~<meta property="og:url" content="(.*?)">~', // Pattern to match
 			function() { // Function to execute when matched
 
@@ -49,3 +49,11 @@ array (size=2)
   0 => string '<meta property="og:url" content="https://myanimelist.net/anime/1/Cowboy_Bebop">' (length=79)
   1 => string 'https://myanimelist.net/anime/1/Cowboy_Bebop' (length=44)
 ```
+
+## Dependencies
+- [Guzzle](https://github.com/guzzle/guzzle)
+
+## [Donate](https://liberapay.com/Nekomata/donate)
+If you found this useful, please feel free to donate!
+
+[![Donate](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Nekomata/donate "Donate using Liberapay")
