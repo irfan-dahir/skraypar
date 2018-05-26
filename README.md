@@ -50,6 +50,8 @@ array (size=2)
   1 => string 'https://myanimelist.net/anime/1/Cowboy_Bebop' (length=44)
 ```
 
+**[MORE EXAMPLES](https://github.com/jikan-me/jikan/tree/master/examples)**
+
 ## Dependencies
 - [Guzzle](https://github.com/guzzle/guzzle)
 
