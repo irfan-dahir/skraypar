@@ -7,6 +7,7 @@ class Iterator {
 	public $line;
 	public $iterator;
 	public $response;
+	public $matches = [];
 
 	private $breakpointPattern;
 	private $breakpointCallback;
@@ -52,7 +53,21 @@ class Iterator {
 	}
 
 	public function getLine() {
+		if (!isset($this->file[$this->offset + $this->iterator])) {
+			throw new \Exception("Parsing Error: End Of File (offset: #" . ($this->offset + $this->iterator) . ")");
+		}
+
 		return $this->file[$this->offset + $this->iterator];
+	}
+
+	public function lookAhead(string $pattern, callable $callback) {
+		while (!preg_match($pattern, $this->line, $this->matches)) {
+			$this->line = $this->getLine();
+
+			$this->iterator++;
+		}
+
+		($callback)();
 	}
 
 }
