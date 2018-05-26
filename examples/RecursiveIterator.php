@@ -81,6 +81,7 @@ class Jikan extends \Skraypar\Skraypar {
         	});
 
         	$characters->parse();
+            var_dump($characters->response);
         });
 	}
 
