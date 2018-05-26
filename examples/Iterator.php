@@ -1,4 +1,8 @@
 <?php
+/*
+ * RecursiveIterator.php
+ * Using multiple Iterator instances targetting characters & staff members of an Anime TV show
+ */
 
 require 'vendor/autoload.php';
 
@@ -8,16 +12,24 @@ class Jikan extends \Skraypar\Skraypar {
         $this->addRule('character', '~</div>Characters & Voice Actors</h2>~', function() {
 
         	$characterIterator = 0;
-        	$characters = new \Skraypar\Iterator($this->file, $this->lineNo, $characterIterator);
-/*
+        	$characters = new \Skraypar\Iterator(
+                $this->file, // Reference to file
+                $this->lineNo, // Reference to line number as offset
+            $characterIterator); // Reference to Iterator variable
+/* Set a breakpoint callback
 			$characters->setBreakpointCallback(function() {
 				if (preg_match('~<a name="staff"></a>~', $this->file[$this->lineNo + $i])) {
 					break;
 				}
         	});
 */
+            // Or alternatively, a breakpoint pattern
         	$characters->setBreakpointPattern('~<a name="staff"></a>~');
-        	$characters->setIteratorCallable(function() use (&$characters) {
+
+            // Set an iterable callable
+            // This function will be called while looping at every line
+            $characters->setIteratorCallable(function() use (&$characters) {  // pass self-reference to access iterator & getLine()
+
                 $character = [
                 	'mal_id' => null,
                 	'url' => null,
@@ -27,8 +39,9 @@ class Jikan extends \Skraypar\Skraypar {
                 	'voice_actor' => []
                 ];
 
+                // Look for character table cell
                 if (preg_match('~<td valign="top" width="27" class="ac borderClass (bgColor2|bgColor1)">~', $characters->getLine())) {
-                    $characters->iterator += 3;
+                    $characters->iterator += 3; // increment by 3 lines
                     preg_match('~<img alt="(.*)" width="23" height="32" data-src="(.*)" data-srcset="(.*)" class="lazyload" />~', $characters->getLine(), $this->matches);
                     $character['image_url'] = trim(substr(explode(",", $this->matches[3])[1], 0, -3));
 
@@ -42,10 +55,11 @@ class Jikan extends \Skraypar\Skraypar {
                     preg_match('~<small>(.*)</small>~', $characters->getLine(), $this->matches);
                     $character['role'] = $this->matches[1];
 
+                    // Create another iterator!
                     $voiceActorIterator = 0;
                     $voiceActors = new \Skraypar\Iterator($this->file, $this->lineNo, $voiceActorIterator);
         			$voiceActors->setBreakpointPattern('~</table>~');
-        			$voiceActors->setIteratorCallable(function() use (&$voiceActors, &$characters) {
+        			$voiceActors->setIteratorCallable(function() use (&$voiceActors) { // Pass self reference
         				$voiceActor = [
         					'mal_id' => null,
         					'url' => null,
@@ -73,15 +87,16 @@ class Jikan extends \Skraypar\Skraypar {
                             $voiceActors->response[] = $voiceActor;
                     	}
         			});
-        			$voiceActors->parse();
-        			$character['voice_actor'] = $voiceActors->response;
+
+        			$voiceActors->parse(); // Parse the iteration
+        			$character['voice_actor'] = $voiceActors->response; // Set the response
 
                     $characters->response[] = $character;
                 }
         	});
 
-        	$characters->parse();
-            var_dump($characters->response);
+        	$characters->parse(); // Parse the iteration
+            var_dump($characters->response); // Set response somewhere (possibly a model)
         });
 	}
 
