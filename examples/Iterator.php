@@ -1,6 +1,6 @@
 <?php
 /*
- * RecursiveIterator.php
+ * Iterator.php
  * Using multiple Iterator instances targetting characters & staff members of an Anime TV show
  */
 
