@@ -28,17 +28,23 @@ class Iterator {
 		} elseif (is_array($pattern)) {
 			$this->breakpointPatterns = array_merge($this->breakpointPatterns, $pattern);
 		}
+
+		return $this;
 	}
 
 	public function setBreakpointCallback(callable $callable) {
 		$this->breakpointCallback = $callable;
+
+		return $this;
 	}
 
 	public function setIteratorCallable(callable $callable) {
 		$this->iteratorCallable = $callable;
+
+		return $this;
 	}
 
-	public function getIterator() {
+	public function getIterator() : int {
 		return $this->iterator;
 	}
 
