@@ -9,7 +9,7 @@ class Iterator {
 	public $response;
 	public $matches = [];
 
-	private $breakpointPattern;
+	private $breakpointPatterns = [];
 	private $breakpointCallback;
 	private $iteratorCallable;
 	private $file;
@@ -22,8 +22,12 @@ class Iterator {
 		$this->response = $response;
 	}
 
-	public function setBreakpointPattern(string $pattern) {
-		$this->breakpointPattern = $pattern;
+	public function setBreakpointPattern($pattern) {
+		if (is_string($pattern)) {
+			$this->breakpointPatterns[] = $pattern;
+		} elseif (is_array($pattern)) {
+			$this->breakpointPatterns = array_merge($this->breakpointPatterns, $pattern);
+		}
 	}
 
 	public function setBreakpointCallback(callable $callable) {
@@ -42,8 +46,10 @@ class Iterator {
 		while (true) {
 			$this->line = $this->getLine();
 
-			if (preg_match($this->breakpointPattern, $this->line)) {
-				break;
+			foreach ($this->breakpointPatterns as $key => $value) {
+				if (preg_match($value, $this->line)) {
+					break;
+				}
 			}
 
 			($this->iteratorCallable)();

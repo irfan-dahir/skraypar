@@ -1,7 +1,7 @@
 <?php
 /*
  * LookAhead.php
- * Using of LookAheads with Iterators to simply the example code from /examples/Iterator.php
+ * Using of LookAheads with Iterators to simplify the example code from /examples/Iterator.php
  * A dynamic way of parsing safely without having to control the iterator manually
  */
 
