@@ -48,12 +48,13 @@ class Iterator {
 		return $this->iterator;
 	}
 
-	public function parse() {
+	public function parse(bool $callableOnExit = false) {
 		while (true) {
 			$this->line = $this->getLine();
 
 			foreach ($this->breakpointPatterns as $key => $value) {
 				if (preg_match($value, $this->line)) {
+					!$callableOnExit ?: ($this->iteratorCallable)();
 					break;
 				}
 			}
